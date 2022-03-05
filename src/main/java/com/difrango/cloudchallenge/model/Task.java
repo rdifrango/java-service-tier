@@ -2,9 +2,8 @@
 package com.difrango.cloudchallenge.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
 import java.util.Date;
+import javax.persistence.*;
 
 @Entity
 public class Task {

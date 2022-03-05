@@ -5,9 +5,8 @@ import com.difrango.cloudchallenge.model.Person;
 import com.difrango.cloudchallenge.model.Task;
 import com.difrango.cloudchallenge.repository.PersonRepository;
 import com.difrango.cloudchallenge.repository.TaskRepository;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.Collections;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PersonController {
@@ -36,14 +35,12 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/People/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody
-    void removePerson(@PathVariable("id") long id) {
+    public @ResponseBody void removePerson(@PathVariable("id") long id) {
         personRepository.findById(id).ifPresent(entity -> personRepository.delete(entity));
     }
 
     @RequestMapping(value = "/People/{id}/tasks", method = RequestMethod.DELETE)
-    public @ResponseBody
-    void removePersonTasks(@PathVariable("id") long id) {
+    public @ResponseBody void removePersonTasks(@PathVariable("id") long id) {
         personRepository
                 .findById(id)
                 .ifPresent(
@@ -54,8 +51,7 @@ public class PersonController {
     }
 
     @RequestMapping(value = "/People/{id}/tasks", method = RequestMethod.GET)
-    public @ResponseBody
-    Iterable<Task> getPersonTasks(@PathVariable("id") long id) {
+    public @ResponseBody Iterable<Task> getPersonTasks(@PathVariable("id") long id) {
         return personRepository.findById(id).orElse(new Person()).getTasks();
     }
 
@@ -73,8 +69,7 @@ public class PersonController {
             value = "/People/{id}/task",
             method = RequestMethod.POST,
             headers = {"Content-type=application/json"})
-    public @ResponseBody
-    Task addTask(@PathVariable("id") long id, @RequestBody Task task) {
+    public @ResponseBody Task addTask(@PathVariable("id") long id, @RequestBody Task task) {
         return taskRepository.save(task);
     }
 }

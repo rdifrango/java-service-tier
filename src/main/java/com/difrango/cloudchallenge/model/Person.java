@@ -2,10 +2,9 @@
 package com.difrango.cloudchallenge.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
-import javax.persistence.*;
 import java.util.Collection;
 import java.util.Collections;
+import javax.persistence.*;
 
 @Entity
 public class Person {
