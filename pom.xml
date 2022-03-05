@@ -75,13 +75,12 @@
         <artifactId>spotless-maven-plugin</artifactId>
         <version>${spotless.version}</version>
         <configuration>
-          <!-- optional: limit format enforcement to just the files changed by this feature branch -->
-          <ratchetFrom>origin/main</ratchetFrom>
           <formats>
             <!-- you can define as many formats as you want, each is independent -->
             <format>
               <!-- define the files to apply to -->
               <includes>
+                <include>*.java</include>
                 <include>*.md</include>
                 <include>.gitignore</include>
               </includes>
@@ -100,20 +99,26 @@
 
             <!-- apply a specific flavor of google-java-format and reflow long strings -->
             <googleJavaFormat>
-              <version>1.8</version>
+              <version>1.13.0</version>
               <style>AOSP</style>
               <reflowLongStrings>true</reflowLongStrings>
             </googleJavaFormat>
-
             <!-- make sure every file has the following copyright header.
               optionally, Spotless can set copyright years by digging
               through git history (see "license" section below) -->
             <licenseHeader>
               <content>/* (C)$YEAR */</content>
-              <!-- or <file>${project.basedir}/license-header</file> -->
             </licenseHeader>
           </java>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <phase>compile</phase>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>

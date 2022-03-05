@@ -1,3 +1,4 @@
+/* (C)2022 */
 package com.difrango.cloudchallenge;
 
 import org.springframework.boot.SpringApplication;

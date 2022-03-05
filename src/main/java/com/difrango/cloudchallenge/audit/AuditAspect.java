@@ -1,3 +1,4 @@
+/* (C)2022 */
 package com.difrango.cloudchallenge.audit;
 
 import com.amazonaws.auth.ClasspathPropertiesFileCredentialsProvider;
@@ -18,8 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.annotation.PostConstruct;
 
 /**
- * Aspect that picks out all the join points in the application where we want
- * to log the events.
+ * Aspect that picks out all the join points in the application where we want to log the events.
  */
 @Aspect
 @Component
@@ -45,7 +45,8 @@ public class AuditAspect {
         /*
          * Create an AWS Async client using the credentials found on the classpath.
          */
-        awsLambdaAsyncClient = new AWSLambdaAsyncClient(propertiesFileCredentialsProvider.getCredentials());
+        awsLambdaAsyncClient =
+                new AWSLambdaAsyncClient(propertiesFileCredentialsProvider.getCredentials());
     }
 
     /**
@@ -55,7 +56,10 @@ public class AuditAspect {
      * @return
      * @throws Throwable
      */
-    @Around(value = "execution(public * com.difrango.cloudchallenge.controller.PersonController.*(..))")
+    @Around(
+            value =
+                    "execution(public *"
+                            + " com.difrango.cloudchallenge.controller.PersonController.*(..))")
     public Object doBasicProfiling(ProceedingJoinPoint pjp) throws Throwable {
         Object retVal = null;
         try {
@@ -80,7 +84,12 @@ public class AuditAspect {
                 /*
                  * Create the data to log.
                  */
-                var data = new AuditData(pjp.getTarget().getClass().toString(), pjp.getSignature().getName(), pjp.getArgs(), retVal);
+                var data =
+                        new AuditData(
+                                pjp.getTarget().getClass().toString(),
+                                pjp.getSignature().getName(),
+                                pjp.getArgs(),
+                                retVal);
                 /*
                  * Convert it to JSON via Jackson
                  */
@@ -89,8 +98,12 @@ public class AuditAspect {
                 /*
                  * Invoke the lambda function, asynchronously.  In this case we really don't care about check the result.
                  */
-                var invokeAsyncRequest = new InvokeAsyncRequest().withFunctionName("auditHandler").withInvokeArgs(json);
-                var invokeAsyncResultFuture = awsLambdaAsyncClient.invokeAsyncAsync(invokeAsyncRequest);
+                var invokeAsyncRequest =
+                        new InvokeAsyncRequest()
+                                .withFunctionName("auditHandler")
+                                .withInvokeArgs(json);
+                var invokeAsyncResultFuture =
+                        awsLambdaAsyncClient.invokeAsyncAsync(invokeAsyncRequest);
                 /*
                  * We we will log it that we sent the event but discard the future as we don't want
                  * to block waiting for it..
