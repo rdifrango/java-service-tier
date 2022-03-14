@@ -16,7 +16,16 @@ Given this, the first order of business was to create my [Lambda](http://aws.ama
 	1.  If you haven’t previously set it up, there will be a get started button which when clicked will create the appropriate IAM role to run your Lambda functions.
 2.  I then clicked on the link to create a new function.  All Lambda functions are [Node.js](http://nodejs.org/) based and accepts JSON as the incoming payload.  To help you get started, AWS does provide with a sample, but here’s what I ended up with:
 
-`exports.audit = function(event, context) { console.log('method = ' + event.className); console.log('method = ' + event.methodName); console.log('requestData = ' + JSON.stringify(event.requestData)); console.log('responseData = ' + JSON.stringify(event.responseData)); context.done(null, 'Request Audit');// SUCCESS with message< };`
+```javascript
+exports.audit = function(event, context) 
+{ 
+	console.log('method = ' + event.className); 
+	console.log('method = ' + event.methodName); 
+	console.log('requestData = ' + JSON.stringify(event.requestData)); 
+	console.log('responseData = ' + JSON.stringify(event.responseData)); 
+	context.done(null, 'Request Audit');
+	// SUCCESS with message 
+};`
 
 Note: Essentially the code takes the incoming request, parses the JSON, logs the Class Name where the event occurred, the Method name that it occurred in, and the request and response data which are JSON.stringify() so that they appear appropriately in the log.
 
