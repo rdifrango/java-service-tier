@@ -12,9 +12,9 @@ That sentence, in particular the words “in-app activity” immediately made me
 
 Given this, the first order of business was to create my [Lambda](http://aws.amazon.com/lambda/) function that handles the event.  In order to do this, I highly recommend you read the [Getting Started Guide](http://docs.aws.amazon.com/lambda/latest/dg/welcome.html) and in particular the section on [handling custom events](http://docs.aws.amazon.com/lambda/latest/dg/getting-started-custom-events.html). I will attempt to summarize the high level steps I went through:
 
-1.  I logged into the AWS Console, clicking on the Lambda link.  I
+1.  I logged into the AWS Console, clicking on the Lambda link.
 	1.  If you haven’t previously set it up, there will be a get started button which when clicked will create the appropriate IAM role to run your Lambda functions.
-2.  I then clicked on the link to create a new function.  All Lambda functions are [Node.js](http://nodejs.org/) based and accepts JSON as the incoming payload.  To help you get started, AWS does provide with a sample, but here’s what I ended up with:
+2.  I then clicked on the link to create a new function. All Lambda functions are [Node.js](http://nodejs.org/) based and accepts JSON as the incoming payload.  To help you get started, AWS does provide with a sample, but here’s what I ended up with:
 
 ```javascript
 exports.audit = function(event, context) 
@@ -25,7 +25,7 @@ exports.audit = function(event, context)
 	console.log('responseData = ' + JSON.stringify(event.responseData)); 
 	context.done(null, 'Request Audit');
 	// SUCCESS with message 
-};`
+};```
 
 Note: Essentially the code takes the incoming request, parses the JSON, logs the Class Name where the event occurred, the Method name that it occurred in, and the request and response data which are JSON.stringify() so that they appear appropriately in the log.
 
